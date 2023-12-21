@@ -2,12 +2,16 @@ from fastapi import FastAPI, HTTPException, Form
 # from db import SessionLocal, create_expense
 
 import os 
-
+import uvicorn
 from ner_model import load_ner_model, load_dictionary, setup_keyvalue, scan_money, make_prediction
 
 from pydantic import BaseModel
-
+from zipfile import ZipFile
 from typing import Optional
+import gdown
+# gdown.download('https://drive.google.com/uc?id=1mv31TYl-2BjQ5HRDmi4Z4sHDkHOlz8P4')
+# with ZipFile('./models.zip', 'r') as modelFolder: 
+#     modelFolder.extractall()
 
 app = FastAPI()
 
@@ -61,3 +65,7 @@ async def predict(request: PredictionRequest):
             status_code=300,
             detail='Either Category or Cost is not detected'
         )
+    
+if __name__ == '__main__':
+    uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get('PORT', 8000)), timeout_keep_alive=1200)
+    
