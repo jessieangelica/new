@@ -1,5 +1,5 @@
 # ner_model.py
-import pickle
+
 import numpy as np
 import tensorflow as tf
 from keras.models import load_model
